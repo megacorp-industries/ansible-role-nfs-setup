@@ -1,6 +1,11 @@
 - name: install nfs-utils
   community.general.rpm_ostree_pkg: 
     name: nfs-utils
+  register: layersAdded
+
+- name: Reboot if required
+  reboot:
+  when: layersAdded.changed
 
 - name: Create a mountable directory if it does not exist
   file:
